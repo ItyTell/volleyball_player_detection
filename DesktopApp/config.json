@@ -1,0 +1,5 @@
+{
+    "app_title": "Voleyball AI classifier",
+    "window_size": [600, 400],
+    "supported_formats": ["jpg", "jpeg", "png"]
+}
