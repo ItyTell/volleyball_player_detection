@@ -11,7 +11,7 @@ This README provides instructions on how to set up and use the object detection 
         import numpy as np
 
         # Load the YOLOv3 model
-        model_my = model.load_model('cv_alg/model/yolov3.cfg', 'cv_alg/model/yolov3_ckpt_600.pth')
+        model_my = model.load_model('cv_algorith/model/yolov3.cfg', 'cv_algorithm/model/yolov3_ckpt_600.pth')
 
 2. Run Detection on an Image
 

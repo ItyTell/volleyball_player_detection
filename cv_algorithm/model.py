@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from cv_alg.utils import weights_init_normal, parse_model_config
+from cv_algorithm.utils import weights_init_normal, parse_model_config
 
 
 def create_modules(module_defs: List[dict]) -> Tuple[dict, nn.ModuleList]:

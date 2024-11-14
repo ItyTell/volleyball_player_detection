@@ -15,10 +15,10 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 from torch.autograd import Variable
 
-from cv_alg.model import load_model
-from cv_alg.utils import load_classes, rescale_boxes, non_max_suppression, print_environment_info
-from cv_alg.utils import ImageFolder
-from cv_alg.utils import Resize, DEFAULT_TRANSFORMS
+from cv_algorithm.model import load_model
+from cv_algorithm.utils import load_classes, rescale_boxes, non_max_suppression, print_environment_info
+from cv_algorithm.utils import ImageFolder
+from cv_algorithm.utils import Resize, DEFAULT_TRANSFORMS
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
