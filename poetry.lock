@@ -1401,6 +1401,17 @@ xml = ["defusedxml", "lxml"]
 zarr = ["fsspec", "zarr"]
 
 [[package]]
+name = "tkinterdnd2"
+version = "0.4.2"
+description = "TkinterDnD2 is a python wrapper for George Petasis'' tkDnD Tk extension version 2"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "tkinterdnd2-0.4.2-py3-none-any.whl", hash = "sha256:73eb0a2e380f49687c1ac3b499014b09b53febc7f93d7ab4fefa4ede9691ab57"},
+    {file = "tkinterdnd2-0.4.2.tar.gz", hash = "sha256:00180ac38d86578441dea4662026c7867a022e14501ad492f81e22e22135ceb6"},
+]
+
+[[package]]
 name = "tomli"
 version = "2.1.0"
 description = "A lil' TOML parser"
@@ -1571,4 +1582,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "240fb808b7b58efa688ccc000fbaccc728de6b1bd355df2accb3a20a708231c1"
+content-hash = "75cdf5c5b7b943e4ad6fdb69cbdd2be9a30c265946de668e017df3c96ed10156"

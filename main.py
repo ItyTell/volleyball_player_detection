@@ -3,6 +3,8 @@ import json
 from logging import config
 import numpy as np
 import tkinter as tk
+from cv_algorithm.model import load_model
+from cv_algorithm.detect import detect_image
 
 from tkinterdnd2 import TkinterDnD, DND_FILES
 from tkinter import filedialog, messagebox
@@ -33,12 +35,17 @@ class ImageApp:
         self.sub_images = np.array([])
         self.current_sub_img = 0 # index of current subimage
 
+        self.model = load_model(
+            self.config["model"]["config"],
+            self.config["model"]["checkpoint"],
+        )
+
         root.drop_target_register(DND_FILES)
         root.dnd_bind('<<Drop>>', self.drop_image)
         root.bind("<Configure>", self.on_resize)
 
     def load_image(self):
-        self.image_path = filedialog.askopenfilename(filetypes=[("Image Files", ";".join(["*"+el for el in self.config["supported_formats"]]))])
+        self.image_path = filedialog.askopenfilename(filetypes=[("Image Files", " ".join(["."+el for el in self.config["supported_formats"]]))])
         if self.image_path:
             self.image = Image.open(self.image_path)
             self.processed_image = self.image.copy()
@@ -78,18 +85,23 @@ class ImageApp:
         if np.array(self.sub_images[self.current_sub_img]).size < 4:
             return
         
-        x, y, width, height = self.sub_images[self.current_sub_img]
-        
-        sub_image = self.image.crop([
-                max(x - pad, 0),
-                max(y - pad, 0),
-                max(x + width + pad, 0),
-                max(y + height + pad, 0)
-            ])
-        
-        sub_image = cv2.rectangle(np.array(sub_image), 
-                                  (x, y), (x + width, y + height), 
-                                  color=self.config["outline_color"], thickness=self.config["outline_width"])
+        np_image = np.array(self.image)
+        x, y, x_, y_, *_ = self.sub_images[self.current_sub_img]
+        x = max(int(x) - pad, 0)
+        y = max(int(y) - pad, 0)
+        x_ = min(int(x_) + pad, np_image.shape[1])
+        y_ = min(int(y_) + pad, np_image.shape[0])
+
+        np_image[:y] //= 2
+        np_image[y_:] //= 2
+        np_image[y:y_, :x] //= 2
+        np_image[y:y_, x_:] //= 2
+
+        sub_image = cv2.rectangle(np_image,
+                                  (x, y),
+                                  (x_, y_),
+                                  color=self.config["outline_color"],
+                                  thickness=self.config["outline_width"])
 
         self.processed_image = Image.fromarray(sub_image)
         
@@ -108,6 +120,13 @@ class ImageApp:
             return
         
         self.show_nav_buttons()
+
+        self.sub_images = detect_image(
+            self.model,
+            cv2.imread(self.image_path),
+            conf_thres=self.config["conf_thres"],
+            nms_thres=self.config["nms_thres"],
+        )
         
         if not self.sub_images.size:
             messagebox.showerror("Processing Image", "Subimages array is empty.")

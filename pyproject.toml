@@ -12,6 +12,7 @@ imgaug = "^0.4.0"
 tqdm = "^4.67.0"
 tensorboard = "^2.18.0"
 pytest = "^8.3.3"
+tkinterdnd2 = "^0.4.2"
 
 
 [build-system]
