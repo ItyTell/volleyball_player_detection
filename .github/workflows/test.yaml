@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - NV_GP-21
     pull_request:
       - master
 
