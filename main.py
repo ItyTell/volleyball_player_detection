@@ -85,18 +85,21 @@ class ImageApp:
         if np.array(self.sub_images[self.current_sub_img]).size < 4:
             return
         
+        np_image = np.array(self.image)
         x, y, x_, y_, *_ = self.sub_images[self.current_sub_img]
-        
-        sub_image = self.image.crop([
-                max(x - pad, 0),
-                max(y - pad, 0),
-                max(x_ + pad, 0),
-                max(y_ + pad, 0)
-            ])
-        
-        np_sub_image = np.array(sub_image)
-        sub_image = cv2.rectangle(np_sub_image,
-                                  (0, 0), tuple(reversed(np_sub_image.shape[:-1])),
+        x = max(int(x) - pad, 0)
+        y = max(int(y) - pad, 0)
+        x_ = min(int(x_) + pad, np_image.shape[1])
+        y_ = min(int(y_) + pad, np_image.shape[0])
+
+        np_image[:y] //= 2
+        np_image[y_:] //= 2
+        np_image[y:y_, :x] //= 2
+        np_image[y:y_, x_:] //= 2
+
+        sub_image = cv2.rectangle(np_image,
+                                  (x, y),
+                                  (x_, y_),
                                   color=self.config["outline_color"],
                                   thickness=self.config["outline_width"])
 

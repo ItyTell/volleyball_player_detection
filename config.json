@@ -2,7 +2,7 @@
     "app_title": "Voleyball AI classifier",
     "window_size": [600, 400],
     "supported_formats": ["jpg", "jpeg", "png"],
-    "processed_image_padding": 40,
+    "processed_image_padding": 20,
     "outline_color": [0, 255, 0],
     "outline_width": 5,
     "model": {
