@@ -85,18 +85,20 @@ class ImageApp:
         if np.array(self.sub_images[self.current_sub_img]).size < 4:
             return
         
-        x, y, width, height = self.sub_images[self.current_sub_img]
+        x, y, x_, y_, *_ = self.sub_images[self.current_sub_img]
         
         sub_image = self.image.crop([
                 max(x - pad, 0),
                 max(y - pad, 0),
-                max(x + width + pad, 0),
-                max(y + height + pad, 0)
+                max(x_ + pad, 0),
+                max(y_ + pad, 0)
             ])
         
-        sub_image = cv2.rectangle(np.array(sub_image), 
-                                  (x, y), (x + width, y + height), 
-                                  color=self.config["outline_color"], thickness=self.config["outline_width"])
+        np_sub_image = np.array(sub_image)
+        sub_image = cv2.rectangle(np_sub_image,
+                                  (0, 0), tuple(reversed(np_sub_image.shape[:-1])),
+                                  color=self.config["outline_color"],
+                                  thickness=self.config["outline_width"])
 
         self.processed_image = Image.fromarray(sub_image)
         
@@ -115,6 +117,13 @@ class ImageApp:
             return
         
         self.show_nav_buttons()
+
+        self.sub_images = detect_image(
+            self.model,
+            cv2.imread(self.image_path),
+            conf_thres=self.config["conf_thres"],
+            nms_thres=self.config["nms_thres"],
+        )
         
         if not self.sub_images.size:
             messagebox.showerror("Processing Image", "Subimages array is empty.")

@@ -8,5 +8,7 @@
     "model": {
         "config": "cv_algorithm/model/yolov3.cfg",
         "checkpoint": "cv_algorithm/model/yolov3_ckpt_600.pth"
-    }
+    },
+    "conf_thres": 0.01,
+    "nms_thres": 0.1
 }
