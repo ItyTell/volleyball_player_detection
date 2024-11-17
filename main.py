@@ -38,7 +38,7 @@ class ImageApp:
         root.bind("<Configure>", self.on_resize)
 
     def load_image(self):
-        self.image_path = filedialog.askopenfilename(filetypes=[("Image Files", ";".join(["*"+el for el in self.config["supported_formats"]]))])
+        self.image_path = filedialog.askopenfilename(filetypes=[("Image Files", " ".join(["."+el for el in self.config["supported_formats"]]))])
         if self.image_path:
             self.image = Image.open(self.image_path)
             self.processed_image = self.image.copy()
