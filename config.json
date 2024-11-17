@@ -4,5 +4,9 @@
     "supported_formats": ["jpg", "jpeg", "png"],
     "processed_image_padding": 40,
     "outline_color": [0, 255, 0],
-    "outline_width": 5
+    "outline_width": 5,
+    "model": {
+        "config": "cv_algorithm/model/yolov3.cfg",
+        "checkpoint": "cv_algorithm/model/yolov3_ckpt_600.pth"
+    }
 }

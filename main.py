@@ -3,6 +3,8 @@ import json
 from logging import config
 import numpy as np
 import tkinter as tk
+from cv_algorithm.model import load_model
+from cv_algorithm.detect import detect_image
 
 from tkinterdnd2 import TkinterDnD, DND_FILES
 from tkinter import filedialog, messagebox
@@ -32,6 +34,11 @@ class ImageApp:
         
         self.sub_images = np.array([])
         self.current_sub_img = 0 # index of current subimage
+
+        self.model = load_model(
+            self.config["model"]["config"],
+            self.config["model"]["checkpoint"],
+        )
 
         root.drop_target_register(DND_FILES)
         root.dnd_bind('<<Drop>>', self.drop_image)
